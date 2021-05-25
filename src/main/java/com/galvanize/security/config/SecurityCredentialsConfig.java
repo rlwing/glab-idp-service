@@ -1,5 +1,6 @@
 package com.galvanize.security.config;
 
+import com.galvanize.security.filter.JwtTokenAuthenticationFilter;
 import com.galvanize.security.filter.JwtUsernameAndPasswordAuthenticationFilter;
 import com.galvanize.security.user.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -37,6 +39,7 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 // handle an authorized attempts
                 .exceptionHandling().authenticationEntryPoint((req, rsp, e) -> rsp.sendError(HttpServletResponse.SC_UNAUTHORIZED))
                 .and()
+                .addFilterBefore(new JwtTokenAuthenticationFilter(jwtProperties), UsernamePasswordAuthenticationFilter.class)
                 // Add a filter to validate user credentials and add token in the response header
                 // What's the authenticationManager()?
                 // An object provided by WebSecurityConfigurerAdapter, used to authenticate the user passing user's credentials
@@ -45,8 +48,9 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // allow auth POST requests
                 .antMatchers(HttpMethod.POST, jwtProperties.getUri()).permitAll()
-                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-                .antMatchers(HttpMethod.PUT, "/admin/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
+                .antMatchers(HttpMethod.GET,"/actuator/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.PUT, jwtProperties.getUri()).hasRole("ADMIN")
                 // any other requests must be authenticated
                 .anyRequest().authenticated();
     }
