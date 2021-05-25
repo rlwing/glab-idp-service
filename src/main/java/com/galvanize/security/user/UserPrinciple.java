@@ -13,15 +13,17 @@ public class UserPrinciple implements UserDetails {
     private Long id;
     private String name;
     private String username;
+    private String email;
     @JsonIgnore
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrinciple(Long id, String name, String username,  String password) {
+    public UserPrinciple(Long id, String name, String username,  String password, String email) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.password = password;
+        this.email = email;
     }
 
     public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {

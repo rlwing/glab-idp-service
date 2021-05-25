@@ -76,7 +76,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         UserPrinciple user = userDetailsService.findUserByUserName(auth.getName());
         String token = Jwts.builder()
                 .setSubject(auth.getName())
-                .claim("email", user.getUsername())
+                .claim("email", user.getEmail())
                 .claim("guid", user.getId())
                 // Convert to list of strings.
                 // This is important because it affects the way we get them back in the Gateway.

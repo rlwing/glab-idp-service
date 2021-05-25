@@ -29,15 +29,16 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public UserPrinciple findUserByUserName(String username) throws UsernameNotFoundException {
         UserPrinciple userPrinciple = jdbcTemplate.queryForObject(
-                "select id, first_name || ' ' || last_name as name, email, password from users where email = ?",
+                "select id, first_name || ' ' || last_name as name, username,  email, password from users where username = ?",
                 (rs, rowNum) -> new UserPrinciple(rs.getLong("id"),
                         rs.getString("name"),
-                        rs.getString("email"),
-                        rs.getString("password")),
-                username);
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("email")),
+                    username);
 
         if(userPrinciple != null){
-            List<String> roles = jdbcTemplate.query("select r.name from users u, user_roles ur, roles r where u.id = ur.user_id and ur.role_id = r.id and u.email = ? ",
+            List<String> roles = jdbcTemplate.query("select r.name from users u, user_roles ur, roles r where u.id = ur.user_id and ur.role_id = r.id and u.username = ? ",
                     (rs, rowNum) -> rs.getString("name")
                     , username);
             List<GrantedAuthority> authorities = new ArrayList<>();

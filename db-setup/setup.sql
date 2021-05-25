@@ -24,10 +24,11 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`
 (
     `id`         bigint NOT NULL AUTO_INCREMENT,
-    `email`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  DEFAULT NULL,
+    `username`   varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
+    `email`      varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL,
     `first_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
     `last_name`  varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-    `password`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+    `password`   varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`)
 ) ENGINE = InnoDB
@@ -65,8 +66,8 @@ LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users`
     DISABLE KEYS */;
 INSERT INTO `users`
-VALUES (1, 'admin@gmdb.com', 'Admin', 'User', '$2a$10$KOTWyOUZFepI4gww.W5NveSqZtLYTZYIAMTdAYU8BB89cYQCxz2Kq'),
-       (2, 'user@gmdb.com', 'General', 'User', '$2a$10$xQzRSztO0WkZRz327yZ33eGBORSpKXwdtkrKAfspaTZEbnX9PiGBS');
+VALUES (1, 'admin@gmdb.com', 'admin@gmdb.com', 'Admin', 'User', '$2a$10$KOTWyOUZFepI4gww.W5NveSqZtLYTZYIAMTdAYU8BB89cYQCxz2Kq'),
+       (2, 'user@gmdb.com', 'user@gmdb.com', 'General', 'User', '$2a$10$xQzRSztO0WkZRz327yZ33eGBORSpKXwdtkrKAfspaTZEbnX9PiGBS');
 /*!40000 ALTER TABLE `users`
     ENABLE KEYS */;
 UNLOCK TABLES;
