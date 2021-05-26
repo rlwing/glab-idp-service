@@ -1,0 +1,164 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "gLab Identity Provider",
+    "description": "Provides identity and authorization service",
+    "contact": {
+      "email": "rob.wing@galvanize.com"
+    },
+    "version": "1.0.0..1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:9100"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Authorization",
+      "description": "AuthN and AuthZ"
+    },
+    {
+      "name": "Registration",
+      "description": "Registration and change password services"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "PasswordChange": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "currentPassword": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "Registration": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/password": {
+      "put": {
+        "tags": [
+          "Registration"
+        ],
+        "description": "User change password",
+        "requestBody": {
+          "description": "User self change password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordChange"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted / Password Changed"
+          },
+          "503": {
+            "description": "Other error changing password"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": [
+          "Registration"
+        ],
+        "description": "User self registration",
+        "requestBody": {
+          "description": "User's registration information.  Inserts into the 'USER' role",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Registration"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted / Successful registration"
+          },
+          "400": {
+            "description": "Bad Request / Username not available"
+          }
+        }
+      }
+    },
+    "/auth/": {
+      "post": {
+        "tags": [
+          "Authorization"
+        ],
+        "summary": "Login with username and password",
+        "requestBody": {
+          "description": "Username and password to login",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted / Successful login",
+            "headers": {
+              "Authorization": {
+                "description": "JWT Token",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("SqlResolve")
 @Service   // It has to be annotated with @Service.
 public class UserDetailsServiceImpl implements UserDetailsService {
 
@@ -29,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     public UserPrinciple findUserByUserName(String username) throws UsernameNotFoundException {
         UserPrinciple userPrinciple = jdbcTemplate.queryForObject(
-                "select id, first_name || ' ' || last_name as name, username,  email, password from users where username = ?",
+                "select id, CONCAT(first_name, \" \", last_name) as name, username,  email, password from users where username = ?",
                 (rs, rowNum) -> new UserPrinciple(rs.getLong("id"),
                         rs.getString("name"),
                         rs.getString("username"),

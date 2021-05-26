@@ -14,12 +14,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.crypto.SecretKey;
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Key;
 import java.sql.Date;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -76,6 +74,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
         UserPrinciple user = userDetailsService.findUserByUserName(auth.getName());
         String token = Jwts.builder()
                 .setSubject(auth.getName())
+                .claim("name", user.getName())
                 .claim("email", user.getEmail())
                 .claim("guid", user.getId())
                 // Convert to list of strings.

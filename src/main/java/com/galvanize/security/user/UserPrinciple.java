@@ -18,7 +18,9 @@ public class UserPrinciple implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrinciple(Long id, String name, String username,  String password, String email) {
+    public UserPrinciple() { }
+
+    public UserPrinciple(Long id, String name, String username, String password, String email) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -38,8 +40,9 @@ public class UserPrinciple implements UserDetails {
         return name;
     }
 
+
     public String getEmail() {
-        return username;
+        return email;
     }
 
     @Override

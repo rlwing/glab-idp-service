@@ -3,8 +3,6 @@ package com.galvanize.security.config;
 import com.galvanize.security.filter.JwtTokenAuthenticationFilter;
 import com.galvanize.security.filter.JwtUsernameAndPasswordAuthenticationFilter;
 import com.galvanize.security.user.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -22,12 +20,14 @@ import javax.servlet.http.HttpServletResponse;
 @EnableWebSecurity 	// Enable security config. This annotation denotes config for spring security.
 public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("userDetailsServiceImpl")
-    @Autowired
+//    @Qualifier("userDetailsServiceImpl")
     private UserDetailsServiceImpl userDetailsService;
-
-    @Autowired
     private JwtProperties jwtProperties;
+
+    public SecurityCredentialsConfig(UserDetailsServiceImpl userDetailsService, JwtProperties jwtProperties) {
+        this.userDetailsService = userDetailsService;
+        this.jwtProperties = jwtProperties;
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -46,9 +46,15 @@ public class SecurityCredentialsConfig extends WebSecurityConfigurerAdapter {
                 // The filter needs this auth manager to authenticate the user.
                 .addFilter(new JwtUsernameAndPasswordAuthenticationFilter(authenticationManager(), userDetailsService, jwtProperties))
                 .authorizeRequests()
-                // allow auth POST requests
-                .antMatchers(HttpMethod.POST, jwtProperties.getUri()).permitAll()
+                // HEALTH
                 .antMatchers(HttpMethod.GET, "/actuator/health").permitAll()
+                // LOGIN
+                .antMatchers(HttpMethod.POST, jwtProperties.getUri()).permitAll()
+                // REGISTER
+                .antMatchers(HttpMethod.POST, "/register/**").permitAll()
+                // CHANGE PASSWORD
+                .antMatchers(HttpMethod.PUT, "/password/**").hasRole("USER")
+                // ADMIN ACTUATOR ENDPOINTS (ALL ARE EXPOSED)
                 .antMatchers(HttpMethod.GET,"/actuator/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, jwtProperties.getUri()).hasRole("ADMIN")
                 // any other requests must be authenticated
