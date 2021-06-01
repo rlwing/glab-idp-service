@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties("security.jwt")
+@ConfigurationProperties(prefix = "security.jwt")
 public class JwtProperties {
     private String uri;
     private String header;

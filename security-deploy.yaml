@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: glab-identity-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: glab-identity-service
+  template:
+    metadata:
+      labels:
+        app: glab-identity-service
+    spec:
+      containers:
+        - image: rlwingjr/glab-identity-service
+          name: glab-identity-service
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 9100
+          env:
+            - name: DB_HOST
+              value: 52.26.72.203:3306
+            - name: DB_NAME
+              value: identity
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: glab-idp-db
+                  key: username
+            - name: DB_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: glab-idp-db
+                  key: password
+            - name: security.jwt.secret
+              valueFrom:
+                secretKeyRef:
+                  name: jwt-secret-key
+                  key: jwt-secret

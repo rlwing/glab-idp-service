@@ -68,8 +68,8 @@ LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users`
     DISABLE KEYS */;
 INSERT INTO `users`
-VALUES (1, 'admin@gmdb.com', 'admin@gmdb.com', 'Admin', 'User', '$2a$10$KOTWyOUZFepI4gww.W5NveSqZtLYTZYIAMTdAYU8BB89cYQCxz2Kq'),
-       (2, 'user@gmdb.com', 'user@gmdb.com', 'General', 'User', '$2a$10$xQzRSztO0WkZRz327yZ33eGBORSpKXwdtkrKAfspaTZEbnX9PiGBS');
+VALUES (1, 'admin', 'admin@glab.com', 'Admin', 'User', '$2a$10$KOTWyOUZFepI4gww.W5NveSqZtLYTZYIAMTdAYU8BB89cYQCxz2Kq'),
+       (2, 'user', 'user@glab.com', 'General', 'User', '$2a$10$xQzRSztO0WkZRz327yZ33eGBORSpKXwdtkrKAfspaTZEbnX9PiGBS');
 /*!40000 ALTER TABLE `users`
     ENABLE KEYS */;
 UNLOCK TABLES;
@@ -83,8 +83,6 @@ LOCK TABLES `roles` WRITE;
     DISABLE KEYS */;
 INSERT INTO `roles`
 VALUES (1, 'ROLE_ADMIN'),
-       (3, 'ROLE_MODERATOR'),
-       (4, 'ROLE_PM'),
        (2, 'ROLE_USER');
 /*!40000 ALTER TABLE `roles`
     ENABLE KEYS */;

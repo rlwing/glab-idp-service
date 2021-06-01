@@ -7,6 +7,7 @@ import com.galvanize.model.RegisterRequest;
 import com.galvanize.security.config.JwtProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +21,14 @@ public class RegistrationController {
     private final TokenUtils tokenUtils;
     private final JwtProperties jwtProperties;
     private final RegistrationDAO registrationDAO;
+    private DiscoveryClient discoveryClient;
 
     public RegistrationController(TokenUtils tokenUtils, JwtProperties jwtProperties,
-                                  RegistrationDAO registrationDAO) {
+                                  RegistrationDAO registrationDAO, DiscoveryClient discoveryClient) {
         this.tokenUtils = tokenUtils;
         this.jwtProperties = jwtProperties;
         this.registrationDAO = registrationDAO;
+        this.discoveryClient = discoveryClient;
     }
 
     @PostMapping("/register")

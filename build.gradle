@@ -24,6 +24,11 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+//	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes', version: '1.1.9.RELEASE'
+//	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-kubernetes-config', version: '1.1.9.RELEASE'
+//	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-config'
+	implementation 'org.springframework.cloud:spring-cloud-starter-kubernetes-fabric8-all'
+
 //	implementation group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
 	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
 	implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
