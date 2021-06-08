@@ -52,8 +52,7 @@ docker:
 aws-deploy:
   stage: deploy
   rules:
-    - if: '$CI_COMMIT_BRANCH != "main"'
-      allow_failure: true
+    - if: '$CI_COMMIT_BRANCH == "main"'
   image: registry.gitlab.com/galv-vmw-apr-2021/capstone/base-aws-eks-image:latest
   needs:
     - docker
