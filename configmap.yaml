@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: glab-identity-configs
+data:
+  application.properties: |-
+    security.jwt.uri=/auth/**
+    security.jwt.header=Authorization
+    security.jwt.prefix=Bearer
+    security.jwt.expiration=600
