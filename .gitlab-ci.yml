@@ -66,5 +66,5 @@ aws-deploy:
     - aws eks update-kubeconfig --name "$CLUSTER_NAME"
 
   script:
-    - envsubst < deploy.yaml | kubectl apply -f -
+    - envsubst < identity-deploy.yaml | kubectl apply -f -
     - kubectl apply -f service.yaml
