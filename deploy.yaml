@@ -42,5 +42,7 @@ spec:
             - name: JWT_SECRET_KEY
                 valueFrom:
                   secretKeyRef:
-                    name: glab-identity-secrets
+                    name: jwt-key-secret
                     key: JWT_SECRET_KEY
+          imagePullSecrets: #Secret on Kubernetes cluster.  Values come from GitLab, see below
+            - name: glab-identity-pull-secret
