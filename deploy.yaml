@@ -13,7 +13,7 @@ spec:
         app: glab-identity-service
     spec:
       containers:
-        - image:
+        - image: $IMAGE
           name: glab-identity-service
           imagePullPolicy: Always
           ports:
