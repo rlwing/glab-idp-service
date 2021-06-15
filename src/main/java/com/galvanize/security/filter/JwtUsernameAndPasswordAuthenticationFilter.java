@@ -73,6 +73,7 @@ public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePassword
 
         UserPrinciple user = userDetailsService.findUserByUserName(auth.getName());
         String token = Jwts.builder()
+                .setHeaderParam("typ","JWT")
                 .setSubject(auth.getName())
                 .claim("name", user.getName())
                 .claim("email", user.getEmail())
