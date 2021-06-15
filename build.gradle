@@ -4,6 +4,12 @@ plugins {
 	id 'java'
 }
 
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
 group = 'com.galvanize'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -14,9 +20,6 @@ repositories {
 	maven { url 'https://repo.spring.io/milestone' }
 }
 
-ext {
-	set('springCloudVersion', "2020.0.3-SNAPSHOT")
-}
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-configuration-processor'
@@ -35,12 +38,6 @@ dependencies {
 	testRuntimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-}
-
-dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
 }
 
 test {
